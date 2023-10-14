@@ -516,18 +516,16 @@ const elements = {
     errorEl: document.querySelector(".error")
 };
 const { selectEl , textMarkEl , loaderEl , errorEl  } = elements;
-// Hide elements initially
 textMarkEl.classList.add("is-hidden");
 errorEl.classList.add("is-hidden");
-selectEl.classList.add("is-hidden"); // Hide select on init
+selectEl.classList.add("is-hidden");
 selectEl.addEventListener("change", createMarkUp);
 updateSelect();
 function updateSelect(data1) {
-    // Show loader
     loaderEl.classList.remove("is-hidden");
     (0, _catApi.fetchBreeds)(data1).then((data)=>{
-        loaderEl.classList.add("is-hidden"); // Hide loader
-        selectEl.classList.remove("is-hidden"); // Show select
+        loaderEl.classList.add("is-hidden");
+        selectEl.classList.remove("is-hidden");
         let markSelect = data.map(({ name , id  })=>{
             return `<option value ='${id}'>${name}</option>`;
         });
@@ -538,21 +536,21 @@ function updateSelect(data1) {
     }).catch(onFetchError);
 }
 function createMarkUp(event) {
-    loaderEl.classList.remove("is-hidden"); // Show loader
-    selectEl.classList.add("is-hidden"); // Hide select
-    textMarkEl.classList.add("is-hidden"); // Hide text/info box
+    loaderEl.classList.remove("is-hidden");
+    selectEl.classList.add("is-hidden");
+    textMarkEl.classList.add("is-hidden");
     const breedId = event.currentTarget.value;
     (0, _catApi.fetchCatByBreed)(breedId).then((data)=>{
-        loaderEl.classList.add("is-hidden"); // Hide loader
-        selectEl.classList.remove("is-hidden"); // Show select
+        loaderEl.classList.add("is-hidden");
+        selectEl.classList.remove("is-hidden");
         const { url , breeds  } = data[0];
         textMarkEl.innerHTML = `<img src="${url}" alt="${breeds[0].name}" width="400"/><div class="box"><h2>${breeds[0].name}</h2><p>${breeds[0].description}</p><p><strong>Temperament:</strong> ${breeds[0].temperament}</p></div>`;
-        textMarkEl.classList.remove("is-hidden"); // Show text/info box
+        textMarkEl.classList.remove("is-hidden");
     }).catch(onFetchError);
 }
 function onFetchError() {
-    selectEl.classList.remove("is-hidden"); // Show select
-    loaderEl.classList.add("is-hidden"); // Hide loader
+    selectEl.classList.remove("is-hidden");
+    loaderEl.classList.add("is-hidden");
     (0, _notiflixNotifyAio.Notify).failure("Oops! Something went wrong! Try reloading the page or select another cat breed!");
 }
 
